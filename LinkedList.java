@@ -1,56 +1,71 @@
 class Node {
     int data;
-    Node link;
+    Node info;
 
     public Node(int data) {
         this.data = data;
-        this.link = null;
+        this.info = null;
     }
 }
 
 class LinkedList {
-    private Node first;
+    Node first;
 
     public void insert(int data) {
         Node newNode = new Node(data);
         if (first == null) {
             first = newNode;
         } else {
-            Node current = first;
-            while (current.link != null) {
-                current = current.link;
+            Node temp = first;
+            while (temp.info != null) {
+                temp = temp.info;
             }
-            current.link = newNode;
+            temp.info = newNode;
         }
     }
 
-    public boolean areEqual(LinkedList otherList) {
-        Node current1 = first;
-        Node current2 = otherList.first;
-
-        while (current1 != null && current2 != null) {
-            if (current1.data != current2.data) {
-                return false;
-            }
-            current1 = current1.link;
-            current2 = current2.link;
+    public void removeDuplicates() {
+        if (first == null) {
+            return;
         }
 
-        return current1 == null && current2 == null;
+        Node current = first;
+        while (current != null) {
+            Node runner = current;
+            while (runner.info != null) {
+                if (runner.info.data == current.data) {
+                    runner.info = runner.info.info; 
+                } else {
+                    runner = runner.info;
+                }
+            }
+            current = current.info;
+        }
+    }
+
+    public void display() {
+        Node temp = first;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.info;
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {
-        LinkedList list1 = new LinkedList();
-        list1.insert(10);
-        list1.insert(20);
-        list1.insert(30);
+        LinkedList list = new LinkedList();
+        list.insert(10);
+        list.insert(20);
+        list.insert(10);
+        list.insert(30);
+        list.insert(20);
 
-        LinkedList list2 = new LinkedList();
-        list2.insert(10);
-        list2.insert(20);
-        list2.insert(30);
+        System.out.println("Original list:");
+        list.display();
 
-        boolean equalLists = list1.areEqual(list2);
-        System.out.println("Lists are equal: " + equalLists);
+        list.removeDuplicates();
+
+        System.out.println("List after removing duplicates:");
+        list.display();
     }
 }
