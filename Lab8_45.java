@@ -1,8 +1,7 @@
 import java.util.Scanner;
-public class InfixToPostfix
- {
-    public static void main(String[] args)
-     {
+
+public class Lab8_45 {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter infix: ");
         String infix = sc.nextLine();
@@ -17,8 +16,7 @@ public class InfixToPostfix
             char next = infix.charAt(i);
             i++;
 
-            if (next == ' ') 
-            {
+            if (next == ' ') {
                 continue;
             }
 
@@ -33,7 +31,7 @@ public class InfixToPostfix
                     polish.append(temp);
                     rank += rank(temp);
                 }
-                st.pop();
+                st.pop(); // pop the '('
             } else {
                 while (st.TOP != -1 && stackPrecedence(st.peep(1)) >= infixPrecedence(next)) {
                     char temp = st.pop();
@@ -135,6 +133,6 @@ class Stack {
             return ' ';
         } else {
             return S[TOP - index + 1];
-        }
-    }
+        }
+    }
 }
